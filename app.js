@@ -19,6 +19,15 @@ app.set('views', './views');
 app.set('view engine', 'html')
 // 在开发过程中，需要关掉模板缓存
 swig.setDefaults({cache: false});
+
+// 设置静态文件托管
+// 当用户访问的 url 以/public 开始，那么直接返回对应__dirname + '/public'下的文件
+app.use('/public', express.static(__dirname + '/public'));
+
+// 模块管理
+app.use('/admin', require('./routers/admin'));
+app.use('/api', require('./routers/api'));
+app.use('/', require('./routers/main'));
 /**
  * 首页：
  *  req request 对象
